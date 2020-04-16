@@ -23,7 +23,7 @@ var Utilizador = new Schema({
     externo: Boolean,
     dataCriacao: Date,
     fotoPerfilCaminho: String,
-    projetosFavoritos: [projetoId]
+    projetosFavoritos: [Projeto.projetoId]
 })
 
 var Inscricao = new Schema({
