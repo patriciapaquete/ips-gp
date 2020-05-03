@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 
 
@@ -14,6 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { SignupComponent } from './signup/signup.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
 
   imports: [
@@ -21,6 +23,7 @@ import { SignupComponent } from './signup/signup.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   declarations: [
     AppComponent,
