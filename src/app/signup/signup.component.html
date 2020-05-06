@@ -1,1 +1,99 @@
-<p>signup works!</p>
+<div class="wrapper">
+  <!-- Default form login -->
+  <form class="text-center">
+    <ul>
+      <li class="dividor">
+        <h3>Sign in</h3>
+        <hr>
+        <!-- First Name -->
+        <ul>
+          <li>
+            <div class="form-group">
+              <input type="text" class="form-control" id="firstname" placeholder="First Name" required>
+            </div>
+          </li>
+          <!-- Last Name -->
+          <li>
+            <div class="form-group">
+              <input type="text" class="form-control" id="lastname" placeholder="Last Name" required>
+            </div>
+          </li>
+        </ul>
+
+        <!--Birth date-->
+        <div class="form-group">
+          <input type="date" class="form-control" id="birthdate" required>
+        </div>
+        <!--Email-->
+        <div class="form-group">
+          <input type="text" class="form-control" id="name" placeholder="Name" required>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <input type="password" class="form-control" id="password" placeholder="Password" required>
+        </div>
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <input type="password" class="form-control" id="confirm-pasword" placeholder="Confirm Password" required>
+        </div>
+      </li>
+      <li class="dividor">
+        <div style="border-left:1px solid #000;height:500px"></div>
+      </li>
+      <li class="dividor">
+        <!--Phone Number-->
+        <div class="form-group">
+          <input type="tel" class="form-control" id="phonenumer" placeholder="Phone Number" required>
+        </div>
+        <div class="form-group">
+          <label for="district">Distict:</label>
+          <select id="district" name="district">
+            <option *ngFor="let dis of district.values()">{{dis}}</option>
+          </select>
+        </div>
+        <!--
+        <div class="form-group">
+          <label for="city">City:</label>
+          <select id="city" name="city">
+            <option *ngFor="let city of cities">
+        </select>
+        </div>
+    -->
+     <hr>
+        <div>
+          <input type="checkbox" id="ipsMember">Is a member of IPS?
+
+          <div class="form-group">
+            <input type="text" class="form-control" id="roleIPS" placeholder="Role in IPS (ex.:Student)" >
+
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="entity" placeholder="Entity Name">
+
+          </div>
+
+
+
+        </div>
+        <!-- Sign in button -->
+        <button type="submit">Continue</button>
+        <!-- Register -->
+
+      </li>
+
+
+    </ul>
+  </form>
+</div>
+<script>
+
+      $(document).ready(function () {
+        if ($("#ipsMember").checked) {
+          document.getElementById("entity").hidden = true;
+          document.getElementById("roleIPS").hidden = false;
+        }
+      });
+
+
+</script>
