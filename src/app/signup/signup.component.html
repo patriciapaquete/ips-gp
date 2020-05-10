@@ -1,1 +1,81 @@
-<p>signup works!</p>
+<!--
+<div class="row mt-5">
+  <div class="col-md-6"></div>
+  <form class="form-" action="/api/register" method="POST">
+    <div class="form-group">
+      <label for="name"></label>
+      <input
+        type="name"
+        id="name"
+        name="name"
+        class="form-control"
+        placeholder="Introduza o seu nome"
+        >
+    </div>
+  </form>
+</div> -->
+<p>
+  <ngb-alert [dismissible]="false">
+    <strong>Warning!</strong> Better check yourself, you're not looking too good.
+  </ngb-alert>
+</p>
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mb-3">
+        <i class="fas fa-user-plus"></i> Register</h1>
+      <form #form action="/api/register" method="POST">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="name" id="name" name="name" class="form-control" placeholder="Enter Name"/>
+            </div>
+            <div class="form-group">
+              <label for="dataDeNascimento">Data de Nascimento</label>
+              <input type="date" id="dataDeNascimento" name="dataDeNascimento" class="form-control" placeholder="Introduza a data de nascimento"/>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"/>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Create Password"/>
+            </div>
+            <div class="form-group">
+              <label for="password2">Confirm Password</label>
+              <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password"/>
+            </div>
+            <hr>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number</label>
+              <input type="number" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Introduza o Numero de Telefone"/>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="distrito">Distrito</label>
+                <select class="form-control" id="distrito">
+                  <option></option>
+                </select>
+              </div>
+              <div class="col">
+                <label for="cidade">Cidade</label>
+                <select class="form-control" id="cidade">
+                  <option></option>
+                </select>
+              </div>
+            </div>
+            <hr>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" (click)="form.submit()">
+          Register
+        </button>
+      </form>
+      <p class="lead mt-4">Have An Account? <a href="/api/login">Login</a></p>
+    </div>
+  </div>
+</div>
