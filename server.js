@@ -3,9 +3,11 @@ const bodyparser = require('body-parser');
 const path = require('path');
 const http = require('http');
 const passport = require('passport');
-const PORT = process.env.PORT || 4200;
+const PORT = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const session = require('express-session');
+const fs = require('fs');
+const cors = require('cors');
 
 var app = express();
 
@@ -37,16 +39,25 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Pasta DIST do angular onde irá ser chamados os dois servidores
-app.use(express.static(path.join(__dirname,'dist')));
+app.use(express.static('dist/Projeto-GP'));
 
 const api = require('./routes/api');
 app.use('/api',api);
 
 app.get('*',(req,res)=>{
   console.log(__dirname);
-  res.sendFile(path.join(__dirname,'dist/index.html'));
+  res.sendFile(path.join(__dirname,'index.html'));
 });
 
 const server = http.createServer(app);
 
-server.listen(PORT,console.log(`Server listening on ${PORT}`));
+app.use(cors());
+
+var angularConfig = {
+  url: 'http://localhost:'+PORT
+}
+
+server.listen(PORT,()=>{
+  fs.writeFileSync(path.join(__dirname,"/src/assets/config.json"),JSON.stringify(angularConfig));
+  console.log(`Server listening on ${PORT}`)
+});

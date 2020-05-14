@@ -1,81 +1,202 @@
-<!--
 <div class="row mt-5">
-  <div class="col-md-6"></div>
-  <form class="form-" action="/api/register" method="POST">
-    <div class="form-group">
-      <label for="name"></label>
-      <input
-        type="name"
-        id="name"
-        name="name"
-        class="form-control"
-        placeholder="Introduza o seu nome"
-        >
-    </div>
-  </form>
-</div> -->
-<p>
-  <ngb-alert [dismissible]="false">
-    <strong>Warning!</strong> Better check yourself, you're not looking too good.
-  </ngb-alert>
-</p>
-<div class="row mt-5">
-  <div class="col-md-6 m-auto">
-    <div class="card card-body">
-      <h1 class="text-center mb-3">
-        <i class="fas fa-user-plus"></i> Register</h1>
-      <form #form action="/api/register" method="POST">
-        <div class="row">
-          <div class="col">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="name" id="name" name="name" class="form-control" placeholder="Enter Name"/>
-            </div>
-            <div class="form-group">
-              <label for="dataDeNascimento">Data de Nascimento</label>
-              <input type="date" id="dataDeNascimento" name="dataDeNascimento" class="form-control" placeholder="Introduza a data de nascimento"/>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"/>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" class="form-control" placeholder="Create Password"/>
-            </div>
-            <div class="form-group">
-              <label for="password2">Confirm Password</label>
-              <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password"/>
-            </div>
-            <hr>
-          </div>
-          <div class="col">
-            <div class="form-group">
-              <label for="phoneNumber">Phone Number</label>
-              <input type="number" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Introduza o Numero de Telefone"/>
-            </div>
-            <div class="row">
-              <div class="col">
-                <label for="distrito">Distrito</label>
-                <select class="form-control" id="distrito">
-                  <option></option>
-                </select>
+  <div class="col-md-10 m-auto">
+    <form [formGroup]="formRegisto" (ngSubmit)="postData()">
+      {{ formRegisto.value | json }}
+      <mat-horizontal-stepper linear>
+        <mat-step label="Registar 1/2">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="name"
+                  id="name"
+                  name="name"
+                  class="form-control"
+                  placeholder="Enter Name"
+                  formControlName="nome"
+                />
               </div>
-              <div class="col">
-                <label for="cidade">Cidade</label>
-                <select class="form-control" id="cidade">
-                  <option></option>
-                </select>
+              <div class="form-group">
+                <label for="dataDeNascimento">Data de Nascimento</label>
+                <input
+                  type="date"
+                  id="dataDeNascimento"
+                  name="dataDeNascimento"
+                  class="form-control"
+                  placeholder="Introduza a data de nascimento"
+                  formControlName="dataNascimento"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="Enter Email"
+                  formControlName="email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="form-control"
+                  placeholder="Create Password"
+                  formControlName="password"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input
+                  type="password"
+                  id="password2"
+                  name="password2"
+                  class="form-control"
+                  placeholder="Confirm Password"
+                  formControlName="confirmPassword"
+                />
+              </div>
+              <hr />
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input
+                  type="number"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  class="form-control"
+                  placeholder="Introduza o Numero de Telefone"
+                  formControlName="phoneNumber"
+                />
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="distrito">Distrito</label>
+                  <select
+                    class="form-control"
+                    id="distrito"
+                    name="distrito"
+                    formControlName="distrito"
+                  >
+                    <option></option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="cidade">Cidade</label>
+                  <select
+                    class="form-control"
+                    id="cidade"
+                    name="cidade"
+                    formControlName="cidade"
+                  >
+                    <option></option>
+                  </select>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col">
+                  <label for="tipoMembro">Tipo de membro:</label>
+                  <select
+                    class="form-control"
+                    id="tipoMembro"
+                    name="tipoMembro"
+                    formControlName="tipoMembro"
+                  >
+                    <option></option>
+                  </select>
+                </div>
+                <div class="col">
+                  <div class="row">
+                    <label for="escola">Escola</label>
+                    <select
+                      class="form-control"
+                      id="escola"
+                      name="escola"
+                      formControlName="escola"
+                    >
+                      <option></option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <label for="formacao">Formação</label>
+                    <select
+                      class="form-control"
+                      id="formacao"
+                      name="formacao"
+                      formControlName="formacao"
+                    >
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
-            <hr>
           </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block" (click)="form.submit()">
-          Register
-        </button>
-      </form>
-      <p class="lead mt-4">Have An Account? <a href="/api/login">Login</a></p>
-    </div>
+          <button class="btn btn-primary btn-block" mat-button matStepperNext>
+            Next
+          </button>
+        </mat-step>
+        <mat-step label="Registar 2/2">
+              <label for="AreasInteresse">Areas de Interesse:</label>
+              <div *ngFor="let control of areasArray.controls; let i = index;">
+                <div class="row">
+                  <div class="col-md-5" >
+                    <mat-checkbox labelPosition="after" [formControl]="control" (change)="getSelectedAreas()" name="{{areas[i]}}" >{{areas[i]}}</mat-checkbox>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col">
+                  <input type="checkbox" class="form-check-input" name="atividadeAcademica" value="Atividades Académicas">Atividades Académicas
+                </div>
+                <div class="col">
+                  <input type="checkbox" name="Ambiental" value="Ambiental">Ambiental
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <input type="checkbox" name="Apoio a Eventos" value="Apoio a Eventos">Apoio a Eventos
+                </div>
+                <div class="col">
+                  <input type="checkbox" name="Informática" value="Informática">Informática
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <input type="checkbox" name="Comunicação" value="Comunicação">Comunicação
+                </div>
+                <div class="col">
+                  <input type="checkbox" name="Cultural" value="Cultural">Cultural
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <input type="checkbox" name="Desporto" value="Desporto">Desporto
+                </div>
+                <div class="col">
+                  <input type="checkbox" name="Educação" value="Educação">Educação
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <input type="checkbox" name="Saude" value="Saude">Saúde
+                </div>
+                <div class="col">
+                  <input type="checkbox" name="Social" value="Social">Social
+                </div>
+              </div> -->
+          <button type="submit" class="btn btn-primary btn-block">
+            Register
+          </button>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </form>
   </div>
 </div>
