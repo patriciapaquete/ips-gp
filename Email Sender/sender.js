@@ -3,7 +3,7 @@ const sgMail = require('@sendgrid/mail');
 var fs = require("fs");
 const EMAIL = "paquetep@gmail.com";
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
+console.log(process.env.SENDGRID_API_KEY)
 
 
 /**
@@ -14,7 +14,7 @@ module.exports.sendEmail = function send(to, subject, attachement, attachementNa
     
     var htmlEmailTemplate="smth";
     try{
-        htmlEmailTemplate= fs.readFileSync("./templates/"+subject+".html", "utf-8", function (err){
+        htmlEmailTemplate = fs.readFileSync("./templates/"+subject+".html", "utf-8", function (err){
         console.log(err)
         });
     }catch (err){

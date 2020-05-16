@@ -1,3 +1,4 @@
+require('dotenv').config();
 var email = require('./sender');
 var fs = require("fs");
 
@@ -11,4 +12,4 @@ attachment = fs.readFileSync(pathToAttachment).toString("base64");
 
 
 //send a template email 
-email.sendEmail("patriciapaquete@gmail.com", "welcome",attachment, "qrCode", "application/pdf")
+//email.sendEmail("patriciapaquete@gmail.com", "welcome",attachment, "qrCode", "application/pdf")
