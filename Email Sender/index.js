@@ -7,7 +7,7 @@ pathToAttachment = "./qrcode.pdf";
 attachment = fs.readFileSync(pathToAttachment).toString("base64");
 
 //send any email
-email.sendEmail("patriciapaquete@gmail.com", "we",attachment, "qrCode", "application/pdf")
+//email.sendEmail("patriciapaquete@gmail.com", "we",attachment, "qrCode", "application/pdf")
 
 
 //send a template email 
