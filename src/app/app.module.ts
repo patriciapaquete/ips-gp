@@ -9,6 +9,8 @@ import { HttpClientModule} from '@angular/common/http';
 import {MatStepperModule, MatStep} from '@angular/material/stepper';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule}from '@angular/material/checkbox'
+import {MatSelectModule}from '@angular/material/select';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 import { AppComponent } from './app.component';
@@ -34,7 +36,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     MatStepperModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule,
+    MatAutocompleteModule
   ],
   declarations: [
     AppComponent,

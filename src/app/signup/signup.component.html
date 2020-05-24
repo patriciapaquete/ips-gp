@@ -1,21 +1,31 @@
 <div class="row mt-5">
   <div class="col-md-10 m-auto">
-    <form [formGroup]="formRegisto" (ngSubmit)="postData()">
-      {{ formRegisto.value | json }}
-      <mat-horizontal-stepper linear>
-        <mat-step label="Registar 1/2">
+    <!-- {{ formRegisto.value | json }} -->
+    <!-- <form [formGroup]="formRegisto" (ngSubmit)="postData()"> -->
+    <mat-horizontal-stepper labelPosition="bottom">
+      <mat-step label="Registar 1/2" [stepControl]="formRegisto">
+        <form [formGroup]="formRegisto">
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label for="name">Name</label>
+                <label for="nome">Nome</label>
                 <input
-                  type="name"
-                  id="name"
-                  name="name"
+                  type="text"
+                  id="nome"
+                  name="nome"
+                  required
                   class="form-control"
-                  placeholder="Enter Name"
+                  placeholder="Introduza o seu nome"
                   formControlName="nome"
                 />
+                <div
+                  *ngIf="nome.invalid && (nome.dirty || nome.touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="nome.errors.required">
+                    O nome é um campo obrigatorio.
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="dataDeNascimento">Data de Nascimento</label>
@@ -27,6 +37,14 @@
                   placeholder="Introduza a data de nascimento"
                   formControlName="dataNascimento"
                 />
+                <div
+                  *ngIf="dataNascimento.invalid && (dataNascimento.dirty || dataNascimento.touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="dataNascimento.errors.required">
+                    A data de nascimento é um campo obrigatorio.
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="email">Email</label>
@@ -38,6 +56,14 @@
                   placeholder="Enter Email"
                   formControlName="email"
                 />
+                <div
+                  *ngIf="email.invalid && (email.dirty || email.touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="email.errors.required">
+                    A data de nascimento é um campo obrigatorio.
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
@@ -65,40 +91,50 @@
             </div>
             <div class="col">
               <div class="form-group">
-                <label for="phoneNumber">Phone Number</label>
+                <label for="numeroTelefone">Phone Number</label>
                 <input
                   type="number"
-                  id="phoneNumber"
-                  name="phoneNumber"
+                  id="numeroTelefone"
+                  name="numeroTelefone"
                   class="form-control"
                   placeholder="Introduza o Numero de Telefone"
-                  formControlName="phoneNumber"
+                  formControlName="numeroTelefone"
                 />
               </div>
-              <div class="row">
-                <div class="col">
+              <!-- <div class="row"> -->
+                <div class="row">
                   <label for="distrito">Distrito</label>
-                  <select
+                  <input type="text"
+                    placeholder="Escolha um Distrito"
                     class="form-control"
                     id="distrito"
                     name="distrito"
                     formControlName="distrito"
+                    MatInput
+                    [matAutocomplete]="autoDistrito"
                   >
-                    <option></option>
-                  </select>
+                  <mat-autocomplete #autoDistrito="matAutocomplete">
+                    <mat-option *ngFor="let distrito of filteredDistritos | async" [value]="distrito">
+                      {{distrito}}
+                    </mat-option>
+                  </mat-autocomplete>
                 </div>
-                <div class="col">
-                  <label for="cidade">Cidade</label>
-                  <select
+                <div class="row">
+                  <label for="concelho">Concelho</label>
+                  <input type="text"
+                    placeholder="Escolha um Concelho"
                     class="form-control"
-                    id="cidade"
-                    name="cidade"
-                    formControlName="cidade"
-                  >
-                    <option></option>
-                  </select>
+                    id="concelho"
+                    name="concelho"
+                    formControlName="concelho"
+                    MatInput
+                    [matAutocomplete]="autoConcelho"
+                  ><mat-autocomplete #autoConcelho="matAutocomplete">
+                    <mat-option *ngFor="let concelho of filteredConcelhos | async" [value]="concelho">
+                      {{concelho}}
+                    </mat-option>
+                  </mat-autocomplete>
                 </div>
-              </div>
               <hr />
               <div class="row">
                 <div class="col">
@@ -109,94 +145,117 @@
                     name="tipoMembro"
                     formControlName="tipoMembro"
                   >
-                    <option></option>
+                    <option
+                      *ngFor="let tipo of tiposMembro; let i = index"
+                      [ngValue]="tipo"
+                      >{{ tipo }}</option
+                    >
                   </select>
                 </div>
                 <div class="col">
-                  <div class="row">
-                    <label for="escola">Escola</label>
-                    <select
-                      class="form-control"
-                      id="escola"
-                      name="escola"
-                      formControlName="escola"
-                    >
-                      <option></option>
-                    </select>
-                  </div>
-                  <div class="row">
-                    <label for="formacao">Formação</label>
-                    <select
-                      class="form-control"
-                      id="formacao"
-                      name="formacao"
-                      formControlName="formacao"
-                    >
-                      <option></option>
-                    </select>
+                <div *ngIf="tipoMembro.value === 'Voluntario Interno'">
+                    <div class="row">
+                      <label for="escola">Escola</label>
+                      <select
+                        class="form-control"
+                        id="escola"
+                        name="escola"
+                        formControlName="escola"
+
+                      >
+                        <option
+                          *ngFor="let escola of escolas; let i = index"
+                          [ngValue]="escola"
+                          >{{ escola }}</option
+                        >
+                      </select>
+                    </div>
+                    <div class="row">
+                      <label for="formacao">Formação</label>
+                      <select
+                        class="form-control"
+                        id="formacao"
+                        name="formacao"
+                        formControlName="formacao"
+                      >
+                        <option
+                          *ngFor="let formacao of formacoes; let i = index"
+                          [ngValue]="formacao"
+                          >{{formacao}}</option
+                        >
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <button class="btn btn-primary btn-block" mat-button matStepperNext>
-            Next
+            Continuar
           </button>
-        </mat-step>
-        <mat-step label="Registar 2/2">
-              <label for="AreasInteresse">Areas de Interesse:</label>
-              <div *ngFor="let control of areasArray.controls; let i = index;">
+        </form>
+      </mat-step>
+      <mat-step label="Registar 2/2" [stepControl]="formRegisto">
+        <form [formGroup]="formPreferencias">
+          <div class="row">
+            <label class="" for="AreasInteresse">Areas de Interesse:</label>
+          </div>
+          <div class="row">
+            <div class="col-lg-10">
+              <!-- <div class="row"> -->
+              <div id="lista" *ngFor="let control of areasArray.controls; let i = index">
+                <div *ngIf="i%2===0 || i===0">
                 <div class="row">
-                  <div class="col-md-5" >
-                    <mat-checkbox labelPosition="after" [formControl]="control" (change)="getSelectedAreas()" name="{{areas[i]}}" >{{areas[i]}}</mat-checkbox>
-                  </div>
+                <mat-checkbox
+                  labelPosition="after"
+                  class="col-md-5"
+                  [formControl]="control"
+                  (change)="getSelectedAreas()"
+                  name="{{ areas[i] }}"
+                  >{{ areas[i] }}</mat-checkbox
+                >
+                <mat-checkbox
+                  labelPosition="after"
+                  class="col-md-5"
+                  [formControl]="control"
+                  (change)="getSelectedAreas()"
+                  name="{{ areas[i+1] }}"
+                  >{{ areas[i+1] }}</mat-checkbox
+                >
                 </div>
+            </div>
               </div>
-              <!-- <div class="row">
-                <div class="col">
-                  <input type="checkbox" class="form-check-input" name="atividadeAcademica" value="Atividades Académicas">Atividades Académicas
-                </div>
-                <div class="col">
-                  <input type="checkbox" name="Ambiental" value="Ambiental">Ambiental
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <input type="checkbox" name="Apoio a Eventos" value="Apoio a Eventos">Apoio a Eventos
-                </div>
-                <div class="col">
-                  <input type="checkbox" name="Informática" value="Informática">Informática
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <input type="checkbox" name="Comunicação" value="Comunicação">Comunicação
-                </div>
-                <div class="col">
-                  <input type="checkbox" name="Cultural" value="Cultural">Cultural
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <input type="checkbox" name="Desporto" value="Desporto">Desporto
-                </div>
-                <div class="col">
-                  <input type="checkbox" name="Educação" value="Educação">Educação
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <input type="checkbox" name="Saude" value="Saude">Saúde
-                </div>
-                <div class="col">
-                  <input type="checkbox" name="Social" value="Social">Social
-                </div>
-              </div> -->
-          <button type="submit" class="btn btn-primary btn-block">
-            Register
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="row text-center">
+            <mat-checkbox
+              labelPosition="after"
+              [formControlName]=""
+              name="regulamento"
+              >Regulamento1</mat-checkbox
+            >
+          </div>
+          <div class="row align-items-center">
+            <mat-checkbox labelPosition="after" name="RGBP">RGBP</mat-checkbox>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            (click)="postData()"
+          >
+            Registar
           </button>
-        </mat-step>
-      </mat-horizontal-stepper>
-    </form>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
+    <!-- </form> -->
   </div>
 </div>
+<script>
+  (function() {
+   console.log("Ready");
+   var ul= document.getElementById("lista");
+   ul.style.columnCount=2;
+})();
+</script>

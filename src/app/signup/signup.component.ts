@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { SignupService } from './signup.service';
-import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormArray, FormControl , Validators} from '@angular/forms';
+import statics from '../../assets/statics.json'
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 
 @Component({
@@ -10,41 +12,142 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+  escolas:Array<String> = statics.escolas;
+  areas: Array<String> =  statics.areas;
+  tiposMembro: Array<String> = statics.tipoUtilizadores;
+  formacoes: Array<String> = statics.fomação;
+  distritos: string[] = statics.distritos;
+  concelhos: string[] = statics.Concelhos;
+  filteredConcelhos: Observable<string[]>;
+  filteredDistritos: Observable<string[]>;
 
-  areas: Array<String> = ['Atividades Académicas', 'Ambiental', 'Apoio a Eventos', 'Informática', 'Comunicação', 'Cultural', 'Desporto', 'Educação', 'Saúde', 'Social'];
   selectedAreas: Array<String>;
   selectedAreasError: Boolean
-  formRegisto: FormGroup;
-  constructor(private service: SignupService,private _fb:FormBuilder) {
-
+  constructor(private service: SignupService,public _fb:FormBuilder) {
   }
 
-  ngOnInit() {
-    this.formRegisto = this._fb.group({
-      nome: new FormControl(''),
-      dataNascimento: new FormControl(''),
-      email:new FormControl(''),
-      password:new FormControl(''),
-      confirmPassword: new FormControl(''),
-      phoneNumber: new FormControl(''),
-      distrito: new FormControl(''),
-      cidade: new FormControl(''),
-      tipoMembro: new FormControl(''),
-      escola: new FormControl(''),
-      formacao: new FormControl(''),
-      areas: this.addAreasInteresse(),
-    });
+  formRegisto = this._fb.group({
+    nome: new FormControl('',[Validators.required]),
+    dataNascimento: new FormControl('',[Validators.required]),
+    email:new FormControl('',[Validators.required]),
+    password:new FormControl('',[Validators.required]),
+    confirmPassword: new FormControl('',[Validators.required]),
+    numeroTelefone: new FormControl(''),
+    distrito: new FormControl(''),
+    concelho: new FormControl(''),
+    tipoMembro: new FormControl('',[Validators.required]),
+    escola: new FormControl(''),
+    formacao: new FormControl(''),
+    // areas: this.addAreasInteresseControls(),
+  });
+
+  formPreferencias = this._fb.group({
+    areas: this.addAreasInteresseControls(),
+    regulamento: new FormControl(false,[Validators.required]),
+    RGPD: new FormControl(false,[Validators.required]),
+  });
+  ngOnInit(){
+    this.filteredConcelhos = this.formRegisto.get('concelho').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filterConcelho(value))
+      );
+    this.filteredDistritos= this.formRegisto.get('distrito').valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filterDistrito(value))
+    );
   }
 
-  addAreasInteresse(){
+  private _filterConcelho(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.concelhos.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  private _filterDistrito(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.distritos.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  addAreasInteresseControls(){
     const arr = this.areas.map(element=>{
       return this._fb.control(false);
     });
     return this._fb.array(arr);
   }
 
+  escolaSelecionada(e){
+    this.escola.setValue(e.target.value,{
+      onlySelf:true,
+    });
+  }
+
+  formacaoSelecionada(e){
+    this.escola.setValue(e.target.value,{
+      onlySelf:true,
+    });
+  }
+
+  tipoMembroSelecionado(e){
+    this.tipoMembro.setValue(e.target.value,{
+      onlySelf:true,
+    });
+  }
+
+  distritoSelecionado(e){
+    this.distrito.setValue(e.target.value,{
+      onlySelf:true,
+    });
+  }
+
+  get dataNascimento(){
+    return this.formRegisto.get("dataNascimento");
+  }
+
+  get confirmPassword(){
+    return this.formRegisto.get('confirmPassword');
+  }
+
+  get password(){
+    return this.formRegisto.get('password');
+  }
+
+  get email(){
+    return this.formRegisto.get('email');
+  }
+
+  get nome(){
+    return this.formRegisto.get('nome');
+  }
+
+  get escola(){
+    return<FormArray>this.formRegisto.get('escola');
+  }
+
+  get tipoMembro(){
+    return<FormArray>this.formRegisto.get('tipoMembro');
+  }
+
+  get formacao(){
+    return<FormArray>this.formRegisto.get('formacao');
+  }
+
+  get distrito(){
+    return<FormArray>this.formRegisto.get('distrito');
+  }
+
   get areasArray(){
-    return<FormArray>this.formRegisto.get('areas');
+    return<FormArray>this.formPreferencias.get('areas');
+  }
+
+  get regulamento(){
+    return this.formPreferencias.get('regulamento');
+  }
+
+  get RGPD(){
+    return this.formPreferencias.get('RGPD');
   }
 
   getSelectedAreas(){
@@ -54,17 +157,22 @@ export class SignupComponent implements OnInit {
         this.selectedAreas.push(this.areas[i]);
       }
     });
-    console.log(this.selectedAreas);
     this.selectedAreasError = this.selectedAreas.length > 0 ?false :true;
+    console.log(this.selectedAreas);
   }
 
   postData() {
-    const newItem = this.selectedAreas;
-    console.log({...this.formRegisto.value,newItem});
-    // this.service.signUpCall(data).subscribe((res) => {
-    //   console.log('response from post data is ', res);
-    // }, (err) => {
-    //   console.log('error during post is ', err);
-    // });
+    if(this.formRegisto.valid && this.formPreferencias.valid){
+      const selectedAreas = this.selectedAreas;
+      let formbody = {...this.formRegisto.value,selectedAreas};
+      console.log(formbody);
+      this.service.register(formbody).subscribe((res)=>{
+        console.log('response from post data is ',res);
+      },(err)=>{
+        console.log('error during post is ', err);
+      })
+     }else{
+       console.log('formulario invalido')
+     }
    }
 }
