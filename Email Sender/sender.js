@@ -1,4 +1,4 @@
-require('dotenv').config();
+//require('dotenv').config();
 const sgMail = require('@sendgrid/mail');
 var fs = require("fs");
 const EMAIL = "paquetep@gmail.com";
@@ -9,7 +9,7 @@ console.log(process.env.SENDGRID_API_KEY)
 /**
  * attachement type: "image/png" ,"image/jpeg" "image/gif", "application/pdf"
  */
-module.exports.sendEmail = function send(to, subject, attachement, attachementName, attachementType){
+module.exports.sendEmail = function send(to, subject, attachementName, attachementType){
     
     
     var htmlEmailTemplate="smth";
@@ -26,7 +26,7 @@ module.exports.sendEmail = function send(to, subject, attachement, attachementNa
         from:  EMAIL,
         subject: subject,
         html: htmlEmailTemplate,
-         
+     /*    
         attachments: [
             {
               content: attachment,
@@ -34,7 +34,7 @@ module.exports.sendEmail = function send(to, subject, attachement, attachementNa
               type: attachementType,
               disposition: "attachment"
             }
-          ]
+          ]*/
     };
 
     sgMail.send(msg, (error, result) =>{
