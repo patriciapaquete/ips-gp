@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SignupService } from './signup.service';
+import { UserService } from '../services/user.service';
 import { FormBuilder, FormArray, FormControl , Validators} from '@angular/forms';
 import statics from '../../assets/statics.json'
 import {Observable} from 'rxjs';
@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
 
   selectedAreas: Array<String>;
   selectedAreasError: Boolean
-  constructor(private service: SignupService,public _fb:FormBuilder) {
+  constructor(private service: UserService,public _fb:FormBuilder) {
   }
 
   formRegisto = this._fb.group({

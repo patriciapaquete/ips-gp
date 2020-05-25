@@ -21,6 +21,7 @@ import { SignupComponent } from './signup/signup.component';
 
 import { RootComponent } from './root/root.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AproveUserComponent } from './aprove-user/aprove-user.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NavComponent,
     LoginComponent,
     SignupComponent,
-    RootComponent
+    RootComponent,
+    AproveUserComponent
   ],
   providers: [],
   bootstrap: [AppComponent, MainComponent, LoginComponent, SignupComponent, NavComponent],

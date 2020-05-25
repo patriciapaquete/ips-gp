@@ -63,8 +63,12 @@ router.post("/register", (req, res) => {
           tipoMembro,
           numeroTelefone,
           escola,
-          formacao
+          formacao,
+          aprovado : true
         });
+        if(tipoMembro==="Voluntario Externo"){
+          newUser.aprovado = false;
+        }
         //Hash Password
         bcrypt.genSalt(10, (err, salt) =>
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -101,6 +105,10 @@ router.get("/logout", (req, res) => {
   req.logOut();
   // req.flash('success_msg','you are logged out');
   res.redirect("/users/login");
+});
+
+router.get("/userAprove",(req,res)=>{
+  User.find({})
 });
 
 module.exports = router;

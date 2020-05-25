@@ -4,7 +4,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http'
 @Injectable({
   providedIn: 'root'
 })
-export class SignupService {
+export class UserService {
   // url = configJSON.url;
 
   constructor(private http:HttpClient) { }
@@ -15,5 +15,13 @@ export class SignupService {
       withCredentials:true,
       headers:new HttpHeaders().append('Content-Type','application/json')
     });
+  }
+
+  login(formData){
+    return this.http.post('/api/login',formData),{
+      observe:'body',
+      withCredentials:true,
+      headers:new HttpHeaders().append('Content-Type','application/json')
+    }
   }
 }
