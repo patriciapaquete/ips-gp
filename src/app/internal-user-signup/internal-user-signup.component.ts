@@ -1,35 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-internal-user-signup',
+  templateUrl: './internal-user-signup.component.html',
+  styleUrls: ['./internal-user-signup.component.css']
 })
-export class LoginComponent implements OnInit {
+export class InternalUserSignupComponent implements OnInit {
+
 
   constructor(private service: UserService, public _fb: FormBuilder) {
   }
 
-  formLogin = this._fb.group({
+  formIPS = this._fb.group({
     email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
   });
   ngOnInit(): void {
   }
 
-  get password() {
-    return this.formLogin.get('password');
-  }
-
   get email() {
-    return this.formLogin.get('email');
+    return this.formIPS.get('email');
   }
 
   postData() {
-    if (this.formLogin.valid) {
-      let formbody = { ...this.formLogin.value };
+    if (this.formIPS.valid) {
+      let formbody = { ...this.formIPS.value };
       console.log(formbody);
       this.service.login(formbody);/*.subscribe((res) => {
         console.log('response from post data is ', res);
@@ -40,5 +35,6 @@ export class LoginComponent implements OnInit {
       console.log('formulario invalido');
     }
   }
+
 
 }
