@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http'
+import { Observable } from 'rxjs';
+import {User} from '../../../models/utilizadores'
 // import * as configJSON from '../../assets/config.json';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  // url = configJSON.url;
 
   constructor(private http:HttpClient) { }
 
@@ -24,4 +25,13 @@ export class UserService {
       headers:new HttpHeaders().append('Content-Type','application/json')
     }
   }
+
+  getDisaprovedUsers(): Observable<User[]>{
+    return this.http.get<User[]>("/api/userAprove")
+  }
+
+  aproveUser(user){
+    return this.http.post("/api/aproveUser",user);
+  }
+
 }

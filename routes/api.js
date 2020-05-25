@@ -28,7 +28,6 @@ router.post("/register", (req, res) => {
     genero,
     dataDeNascimento,
     tipoMembro,
-    areasInteresse,
     distrito,
     concelho,
     numeroTelefone,
@@ -108,7 +107,17 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/userAprove",(req,res)=>{
-  User.find({})
+  User.find({aprovado:false}).then((users)=>{
+    res.json(users);
+  })
 });
 
+router.post("/aproveUser",(req,res)=>{
+  const email = req.body.email
+  console.log(email);
+  user = User.updateOne({email:email}, {aprovado:true},function(err,doc) {
+    if(err) res.status(500).send({error:err});
+    return res.status(200).send("Utilizador Aprovado com Sucesso!");
+  });
+});
 module.exports = router;
