@@ -11,7 +11,9 @@ var email = require('./sender');
 
 //send any email
 //email.sendEmail("patriciapaquete@gmail.com", "we",attachment, "qrCode", "application/pdf")
+
 email.sendEmail("170221034@estudantes.ips.pt", "welcome")
 
+
 //send a template email 
-//email.sendEmail("patriciapaquete@gmail.com", "welcome",attachment, "qrCode", "application/pdf")
+// email.sendEmail("patriciapaquete@gmail.com", "welcome",attachment, "qrCode", "application/pdf")

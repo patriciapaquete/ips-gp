@@ -8,9 +8,7 @@ console.log(process.env.SENDGRID_API_KEY)
 /**
  * attachement type: "image/png" ,"image/jpeg" "image/gif", "application/pdf"
  */
-module.exports.sendEmail = function send(to, subject, attachement, attachementName, attachementType){
-    
-    
+module.exports.sendEmail = function send(to, subject, attachementName, attachementType){
     var htmlEmailTemplate="smth";
     try{
         htmlEmailTemplate = fs.readFileSync("./templates/"+subject+".html", "utf-8", function (err){
@@ -26,14 +24,14 @@ module.exports.sendEmail = function send(to, subject, attachement, attachementNa
         subject: subject,
         html: htmlEmailTemplate,
          
-        /*attachments: [
+        attachments: [
             {
               content: attachment,
               filename: attachementName,
               type: attachementType,
               disposition: "attachment"
             }
-          ]*/
+          ]
     };
 
     sgMail.send(msg, (error, result) =>{
@@ -43,3 +41,26 @@ module.exports.sendEmail = function send(to, subject, attachement, attachementNa
     });
 }
 
+module.exports.sendConfirmationEmail = function send(to){
+    /*var htmlEmailTemplate="smth";
+    try{
+        htmlEmailTemplate = fs.readFileSync("./templates/"+subject+".html", "utf-8", function (err){
+        console.log(err)
+        });
+    }catch (err){
+        console.log(err)
+    };*/
+
+    var msg = {
+        to: to,
+        from:  EMAIL,
+        subject: "Confirmation email",
+        html: ,
+    };
+
+    sgMail.send(msg, (error, result) =>{
+        if(error){
+            console.log("Error: " + error);
+        }
+    });
+}
