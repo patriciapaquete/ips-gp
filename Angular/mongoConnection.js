@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Entidade = new Schema({
+var entidadeSchema = new Schema({
     entidadeId: mongoose.ObjectId,
     predefinido: Boolean,
     nome : String
-})
+});
+var Entidade = mongoose.model('Entidade', entidadeSchema);
 
-var Utilizador = new Schema({
+var utilizadorSchema = new Schema({
     utilizadorId: mongoose.ObjectId,
     email: String,
     password: String,
@@ -24,30 +25,34 @@ var Utilizador = new Schema({
     dataCriacao: Date,
     fotoPerfilCaminho: String,
     projetosFavoritos: [projetoId]
-})
+});
+var Utilizador = mongoose.model('Utilizador', utilizadorSchema);
 
-var Inscricao = new Schema({
+var inscricaoSchema = new Schema({
     inscricaoId : mongoose.ObjectId,
     utilizadorId : Utilizador.utilizadorId,
     projetoId : Projeto.projetoId,
     presente: Boolean,
     avaliacao : [{valor: Number, descricao: String}],
     cancelado : Boolean,
-})
+});
+var Inscricao = mongoose.model('Inscricao', inscricaoSchema);
 
-var CategoriaProjeto = new Schema({
+var categoriaProjetoSchema = new Schema({
     categoriaId: mongoose.ObjectId,
     predefinido: Boolean,
     nome: String
-})
+});
+var CategoriaProjeto = mongoose.model('CategoriaProjeto', categoriaProjetoSchema);
 
-var PublicoAlvo = new Schema({
+var publicoAlvoSchema = new Schema({
     publicoAlvoId: mongoose.ObjectId,
     descricao: String,
     predefinido: Boolean
-})
+});
+var PublicoAlvo = mongoose.model('PublicoAlvo', publicoAlvoSchema);
 
-var Projeto = new Schema({
+var projetoSchema = new Schema({
     projetoId: mongoose.ObjectId,
     nome: String,
     resumo: String,
@@ -74,4 +79,14 @@ var Projeto = new Schema({
         dataFechoInscricoes: Date,
         dataComeco: Date
     }]
-})
+});
+var Projeto = mongoose.model('Projeto', projetoSchema);
+
+module.exports = {
+    Projeto: Projeto,
+    PublicoAlvo: PublicoAlvo,
+    Entidade: Entidade,
+    CategoriaProjeto: CategoriaProjeto,
+    Inscricao: Inscricao,
+    Utilizador: Utilizador
+}
