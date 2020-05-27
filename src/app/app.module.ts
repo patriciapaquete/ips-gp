@@ -22,6 +22,9 @@ import { SignupComponent } from './signup/signup.component';
 import { RootComponent } from './root/root.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AproveUserComponent } from './aprove-user/aprove-user.component';
+import { InternalUserSignupComponent } from './internal-user-signup/internal-user-signup.component';
+import { FooterComponent } from './footer/footer.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 @NgModule({
@@ -47,9 +50,12 @@ import { AproveUserComponent } from './aprove-user/aprove-user.component';
     LoginComponent,
     SignupComponent,
     RootComponent,
-    AproveUserComponent
+    AproveUserComponent,
+    InternalUserSignupComponent,
+    FooterComponent,
+    PerfilComponent
   ],
   providers: [],
-  bootstrap: [AppComponent, MainComponent, LoginComponent, SignupComponent, NavComponent],
+  bootstrap: [AppComponent, MainComponent, LoginComponent, SignupComponent, NavComponent,InternalUserSignupComponent],
 })
 export class AppModule { }
