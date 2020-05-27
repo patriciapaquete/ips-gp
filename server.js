@@ -23,7 +23,7 @@ app.use(
 require("./config/passport")(passport);
 
 //configurar a base de dados
-const db = require("./config/keys").MongoURI;
+const db = require("./config/keys").MongoURIDev;
 
 //connectar ao mongo
 mongoose
@@ -35,20 +35,20 @@ mongoose
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
-//Express session
-app.use(
-  session({
-    secret: "secret",
-    name:"Auth",
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 3600000, //este atributo designa o quanto tempo o browser fica com a cookie
-      httpOnly: false,
-      secure: false,
-    },
-  })
-);
+// //Express session
+// app.use(
+//   session({
+//     secret: "secret",
+//     name:"Auth",
+//     resave: true,
+//     saveUninitialized: true,
+//     cookie: {
+//       maxAge: 3600000, //este atributo designa o quanto tempo o browser fica com a cookie
+//       httpOnly: false,
+//       secure: false,
+//     },
+//   })
+// );
 
 //passport middlewere
 app.use(passport.initialize());
@@ -73,10 +73,10 @@ var angularConfig = {
   url: "http://localhost:" + PORT,
 };
 
-fs.writeFileSync(
-  path.join(__dirname, "/src/assets/config.json"),
-  JSON.stringify(angularConfig)
-);
+// fs.writeFileSync(
+//   path.join(__dirname, "/src/assets/config.json"),
+//   JSON.stringify(angularConfig)
+// );
 
 server.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

@@ -1,21 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const passport = require("passport");
+const utils = require('../utils/utils');
+const passport = require('passport');
 
 //user model
 const User = require("../models/mongoConnection").Utilizadores;
 
-// //Login page
-// router.get('/login',(req,res)=>{
-//     res.render('login');
-// });
-
-// //Register Page
-// router.get('/register',(req,res)=>{
-//     res.render('register');
-// });
-
+router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
+});
 
 
 //Register handle
@@ -38,15 +32,6 @@ router.post("/register", (req, res) => {
     console.log(req.body);
     User.findOne({ email: email }).then((user) => {
       if (user) {
-        //user already exists
-        // errors.push({ msg: "Email is already registered" });
-        // res.render("register", {
-        //   errors,
-        //   nome,
-        //   email,
-        //   password,
-        //   password2,
-        // });
         res.status(409).send('O email introduzido já foi registasdo');
       } else {
         const newUser = new User({
@@ -66,7 +51,7 @@ router.post("/register", (req, res) => {
           aprovado : true
         });
         if(tipoMembro==="Voluntario Externo"){
-          newUser.aprovado = false;
+          newUser.aprovado = "Em Espera";
         }
         //Hash Password
         bcrypt.genSalt(10, (err, salt) =>
@@ -78,9 +63,8 @@ router.post("/register", (req, res) => {
             newUser
               .save()
               .then((user) => {
-                // req.flash('success_msg', 'You are now registered and can log in');
-                //res.redirect("/users/login");
-                res.status(200).send('Utilizador Registado com sucesso');
+                const jwt = utils.issueJWT(user);
+                res.status(200).json({success: true, user: newUser, token: jwt.token, expiresIn: jwt.expires});
               })
               .catch((err) => console.log(err));
           })
@@ -92,32 +76,51 @@ router.post("/register", (req, res) => {
 
 //Login handle
 router.post("/login", (req, res, next) => {
-  passport.authenticate("local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/users/login",
-    // failureFlash: true,
-  })(req, res, next);
+  // passport.authenticate("local", {
+  //   successRedirect: "/dashboard",
+  //   failureRedirect: "/users/login",
+  //   failureFlash: true,
+  // })(req, res, next);
+  const password = req.body.password.toString();
+  User.findOne({email: req.body.email})
+    .then((user)=>{
+      if(!user){
+        res.status(401).json({success: false,msg:"Utilizador não encontrado, porfavor verifique o seu mail e password"});
+      }
+      bcrypt.compare(password, user.password, (err, isMatch)=>{
+        if (err) throw err;
+        if(isMatch && user.aprovado !== "Recusado"){
+            const tokenObject = utils.issueJWT(user);
+            res.status(200).json({success:true, user: user, token: tokenObject.token, expiresIn: tokenObject.expires});
+        }else{
+          res.status(401).json({success:false, msg: "Password Incorreta"});
+        }
+    });
+    })
+    .catch((err)=>{
+      next(err);
+    });
 });
 
-//Logout handle
-router.get("/logout", (req, res) => {
-  req.logOut();
-  // req.flash('success_msg','you are logged out');
-  res.redirect("/users/login");
-});
+// //Logout handle
+// router.get("/logout", (req, res) => {
+//   req.logOut();
+//   // req.flash('success_msg','you are logged out');
+//   res.redirect("/users/login");
+// });
 
-router.get("/userAprove",(req,res)=>{
-  User.find({aprovado:false}).then((users)=>{
-    res.json(users);
-  })
-});
+// router.get("/userAprove",(req,res)=>{
+//   User.find({aprovado:false}).then((users)=>{
+//     res.json(users);
+//   })
+// });
 
-router.post("/aproveUser",(req,res)=>{
-  const email = req.body.email
-  console.log(email);
-  user = User.updateOne({email:email}, {aprovado:true},function(err,doc) {
-    if(err) res.status(500).send({error:err});
-    return res.status(200).send("Utilizador Aprovado com Sucesso!");
-  });
-});
+// router.post("/aproveUser",(req,res)=>{
+//   const email = req.body.email
+//   console.log(email);
+//   user = User.updateOne({email:email}, {aprovado:true},function(err,doc) {
+//     if(err) res.status(500).send({error:err});
+//     return res.status(200).send("Utilizador Aprovado com Sucesso!");
+//   });
+// });
 module.exports = router;
