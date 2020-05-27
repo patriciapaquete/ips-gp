@@ -4,6 +4,8 @@ import { FormBuilder, FormArray, FormControl , Validators} from '@angular/forms'
 import statics from '../../assets/statics.json'
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {Router} from '@angular/router'
+import {AuthService} from '../services/auth.service';
 
 
 @Component({
@@ -23,7 +25,7 @@ export class SignupComponent implements OnInit {
 
   selectedAreas: Array<String>;
   selectedAreasError: Boolean
-  constructor(private service: UserService,public _fb:FormBuilder) {
+  constructor(private service: UserService,public _fb:FormBuilder, private router: Router,private authService: AuthService) {
   }
 
   formRegisto = this._fb.group({
@@ -167,9 +169,13 @@ export class SignupComponent implements OnInit {
       let formbody = {...this.formRegisto.value,selectedAreas};
       console.log(formbody);
       this.service.register(formbody).subscribe((res)=>{
+        this.authService.setLocalStorage(res);
         console.log('response from post data is ',res);
       },(err)=>{
         console.log('error during post is ', err);
+      },()=>{
+        console.log("done!");
+        // this.router.navigate(['login']);
       })
      }else{
        console.log('formulario invalido')

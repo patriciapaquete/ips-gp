@@ -48,7 +48,7 @@ router.post("/register", (req, res) => {
           numeroTelefone,
           escola,
           formacao,
-          aprovado : true
+          aprovado : "Aprovado"
         });
         if(tipoMembro==="Voluntario Externo"){
           newUser.aprovado = "Em Espera";

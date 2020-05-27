@@ -23,7 +23,7 @@ app.use(
 require("./config/passport")(passport);
 
 //configurar a base de dados
-const db = require("./config/keys").MongoURIDev;
+const db = require("./config/keys").MongoURIProduction;
 
 //connectar ao mongo
 mongoose
