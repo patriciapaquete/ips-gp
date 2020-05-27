@@ -1,4 +1,4 @@
-<div class="row mt-5 d-flex justify-content-center">
+<div class="row d-flex justify-content-center">
   <div class="col-md-5 m-auto shadow-sm p-3 mb-5 bg-white rounded">
     <form [formGroup]="formLogin">
       <div class="form-group">
@@ -19,6 +19,7 @@
       <button type="submit" class="btn btn-primary btn-block" (click)="postData()">
         Login
       </button>
+      <hr>
       Pertence ao IPS? Registe-se <a [routerLink]="['/ips_signup']" >aqui</a>!
     </form>
   </div>

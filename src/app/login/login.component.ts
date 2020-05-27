@@ -29,13 +29,11 @@ export class LoginComponent implements OnInit {
 
   postData() {
     if (this.formLogin.valid) {
-      let formbody = { ...this.formLogin.value };
-      console.log(formbody);
-      this.service.login(formbody);/*.subscribe((res) => {
+      this.service.login(this.formLogin.value).subscribe((res) => {
         console.log('response from post data is ', res);
       }, (err) => {
         console.log('error during post is ', err);
-      })*/
+      })
     } else {
       console.log('formulario invalido');
     }

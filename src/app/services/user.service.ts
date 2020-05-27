@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import * as configJSON from '../../assets/config.json';
 @Injectable({
   providedIn: 'root'
@@ -18,10 +18,11 @@ export class UserService {
   }
 
   login(formData) {
-    return this.http.post('/api/login', formData), {
+    return this.http.post('/api/login', formData, {
       observe: 'body',
       withCredentials: true,
       headers: new HttpHeaders().append('Content-Type', 'application/json')
-    }
+    });
   }
+
 }

@@ -24,17 +24,30 @@ export class InternalUserSignupComponent implements OnInit {
 
   postData() {
     if (this.formIPS.valid) {
-      let formbody = { ...this.formIPS.value };
-      console.log(formbody);
-      this.service.login(formbody);/*.subscribe((res) => {
+      let pass = this.generatepassword(this.formIPS.value.email);
+      /*
+      TODO : METER AQUI O ENVIAR EMAIL COM A PASSWORD CRIADA
+      */
+      let formbody = { ... this.formIPS.value, password: pass };
+      this.service.register(formbody).subscribe((res) => {
         console.log('response from post data is ', res);
       }, (err) => {
         console.log('error during post is ', err);
-      })*/
+      })
     } else {
       console.log('formulario invalido');
     }
   }
 
+  generatepassword(email) {
+    const pass = email.slice(0, email.indexOf('@'));
+    let endpass = '';
+    for (let index = 0; index < pass.length; index++) {
+      const asci = pass.charCodeAt(index);
+      endpass += asci % 10;
+
+    }
+    return endpass;
+  }
 
 }
