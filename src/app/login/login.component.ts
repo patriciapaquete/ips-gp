@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
         console.log('response from post data is ', res);
       }, (err) => {
         console.log('error during post is ', err);
-      })
+      });
     } else {
       console.log('formulario invalido');
     }

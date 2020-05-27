@@ -48,7 +48,7 @@ router.post("/register", (req, res) => {
           numeroTelefone,
           escola,
           formacao,
-          aprovado : true
+          aprovado : "Aprovado"
         });
         if(tipoMembro==="Voluntario Externo"){
           newUser.aprovado = "Em Espera";
@@ -89,7 +89,7 @@ router.post("/login", (req, res, next) => {
       }
       bcrypt.compare(password, user.password, (err, isMatch)=>{
         if (err) throw err;
-        if(isMatch && user.aprovado !== "Recusado"){
+        if(isMatch && user.aprovado === "Aprovado"){
             const tokenObject = utils.issueJWT(user);
             res.status(200).json({success:true, user: user, token: tokenObject.token, expiresIn: tokenObject.expires});
         }else{

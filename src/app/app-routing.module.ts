@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'root', component: RootComponent},
-  { path: 'userAprove', component: AproveUserComponent}
+  { path: 'userAprove', component: AproveUserComponent},
   { path: 'ips_signup', component: InternalUserSignupComponent },
   { path: 'profile', component: PerfilComponent },
 ];
