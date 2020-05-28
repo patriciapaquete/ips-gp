@@ -40,8 +40,9 @@ export class UserService {
     return this.http.get<User[]>("/api/userAprove")
   }
 
-  aproveUser(user) {
-    return this.http.post("/api/aproveUser", user);
+  aproveUser(user,avaliacao){
+    user.aprovado = avaliacao;
+    return this.http.post("/api/avaliarUser",user);
   }
 
 }

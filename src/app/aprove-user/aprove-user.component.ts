@@ -17,15 +17,15 @@ export class AproveUserComponent implements OnInit {
 
   ngOnInit(): void {
     if( localStorage.getItem('role') ||localStorage.getItem('role') !== "Gestor"){
-      this.router.navigate(['unauthorized']);
-    }
+       this.router.navigate(['unauthorized']);
+     }
     this.service.getDisaprovedUsers().subscribe(users=>{
       this.utilizadores = users;
     });
   }
 
-  aprovarUtilizador(utilizador) {
-    this.service.aproveUser(utilizador).subscribe(res => {
+  avaliarUtilizador(utilizador,avaliacao){
+    this.service.aproveUser(utilizador,avaliacao).subscribe(res=>{
       console.log(res);
     });
   }
