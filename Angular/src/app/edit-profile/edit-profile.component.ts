@@ -7,13 +7,13 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.css']
 })
-export class SignupComponent implements OnInit {
+export class EditProfileComponent implements OnInit {
+
   escolas: Array<String> = statics.escolas;
   areas: Array<String> = statics.areas;
   tiposMembro: Array<String> = statics.tipoUtilizadores;

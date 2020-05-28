@@ -1,0 +1,10 @@
+<p>aprove-user works!</p>
+<div class="row mt-5">
+  <div class="col-md-10 m-auto">
+    <ul style="list-style-type: none;">
+      <li *ngFor="let utilizador of utilizadores; let i = index">
+        {{utilizador.nome}} | {{utilizador.email}} <button (click)="aprovarUtilizador(utilizador)">Aprovar</button>
+      </li>
+    </ul>
+  </div>
+</div>

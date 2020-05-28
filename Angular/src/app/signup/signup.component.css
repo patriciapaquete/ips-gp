@@ -1,18 +1,14 @@
-
-.wrapper {
-  padding: 5%;
-}
-
-
-
-
-.dividor + .dividor {
- margin-left: 10%;
-}
-ul{
+/* ul {
+  -moz-column-count: 4;
+  -moz-column-gap: 20px;
+  -webkit-column-count: 4;
+  -webkit-column-gap: 20px;
+  column-count: 4;
+  column-gap: 20px;
   list-style: none;
-  display: flex;
-  position: relative;
-  padding: 0%;
-  margin: 0%;
+  orientation: vertical;
+} */
+
+.row{
+  orientation: landscape;
 }
