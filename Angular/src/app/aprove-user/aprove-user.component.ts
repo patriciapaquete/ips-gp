@@ -16,7 +16,7 @@ export class AproveUserComponent implements OnInit {
   constructor(private service: UserService, private router : Router) { }
 
   ngOnInit(): void {
-    if( localStorage.getItem('role') ||localStorage.getItem('role') !== "Gestor"){
+    if(localStorage.getItem('role') !== "Gestor"){
       this.router.navigate(['unauthorized']);
      }
     this.service.getDisaprovedUsers().subscribe(users=>{

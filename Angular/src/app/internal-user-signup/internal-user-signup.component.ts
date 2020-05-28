@@ -28,7 +28,7 @@ export class InternalUserSignupComponent implements OnInit {
       /*
       TODO : METER AQUI O ENVIAR EMAIL COM A PASSWORD CRIADA
       */
-      let formbody = { ... this.formIPS.value, password: pass };
+      let formbody = { ... this.formIPS.value, password: pass , tipoMembro :"Voluntario Interno"};
       this.service.register(formbody).subscribe((res) => {
         console.log('response from post data is ', res);
       }, (err) => {
@@ -47,6 +47,7 @@ export class InternalUserSignupComponent implements OnInit {
       endpass += asci % 10;
 
     }
+    console.log(endpass);
     return endpass;
   }
 
