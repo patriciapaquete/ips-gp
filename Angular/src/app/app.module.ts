@@ -26,6 +26,7 @@ import { InternalUserSignupComponent } from './internal-user-signup/internal-use
 import { FooterComponent } from './footer/footer.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     InternalUserSignupComponent,
     FooterComponent,
     PerfilComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    UnauthorizedComponent
   ],
   providers: [],
   bootstrap: [AppComponent, MainComponent, LoginComponent, SignupComponent, NavComponent,InternalUserSignupComponent],
