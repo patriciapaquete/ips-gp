@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RootComponent } from './root/root.component';
 import { AproveUserComponent } from './aprove-user/aprove-user.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'root', component: RootComponent},
-  { path: 'userAprove', component: AproveUserComponent}
+  { path: 'userAprove', component: AproveUserComponent},
+  { path: 'unauthorized', component: UnauthorizedComponent}
 ];
 
 @NgModule({

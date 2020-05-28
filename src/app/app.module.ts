@@ -22,6 +22,7 @@ import { SignupComponent } from './signup/signup.component';
 import { RootComponent } from './root/root.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AproveUserComponent } from './aprove-user/aprove-user.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { AproveUserComponent } from './aprove-user/aprove-user.component';
     LoginComponent,
     SignupComponent,
     RootComponent,
-    AproveUserComponent
+    AproveUserComponent,
+    UnauthorizedComponent
   ],
   providers: [],
   bootstrap: [AppComponent, MainComponent, LoginComponent, SignupComponent, NavComponent],
