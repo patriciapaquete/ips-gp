@@ -7,6 +7,7 @@ import { RootComponent } from './root/root.component';
 import { AproveUserComponent } from './aprove-user/aprove-user.component';
 import { InternalUserSignupComponent } from './internal-user-signup/internal-user-signup.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'userAprove', component: AproveUserComponent},
   { path: 'ips_signup', component: InternalUserSignupComponent },
   { path: 'profile', component: PerfilComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent}
 ];
 
 @NgModule({

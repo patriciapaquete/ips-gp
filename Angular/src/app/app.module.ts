@@ -25,6 +25,7 @@ import { AproveUserComponent } from './aprove-user/aprove-user.component';
 import { InternalUserSignupComponent } from './internal-user-signup/internal-user-signup.component';
 import { FooterComponent } from './footer/footer.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { PerfilComponent } from './perfil/perfil.component';
     AproveUserComponent,
     InternalUserSignupComponent,
     FooterComponent,
-    PerfilComponent
+    PerfilComponent,
+    UnauthorizedComponent
   ],
   providers: [],
   bootstrap: [AppComponent, MainComponent, LoginComponent, SignupComponent, NavComponent,InternalUserSignupComponent],

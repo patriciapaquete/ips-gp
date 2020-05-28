@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../../../models/utilizadores';
-// import * as configJSON from '../../assets/config.json';
+import {User} from '../../../models/utilizadores'
+
+
 @Injectable({
   providedIn: 'root'
 })
