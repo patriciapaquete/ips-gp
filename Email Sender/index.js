@@ -1,22 +1,25 @@
 require('dotenv').config();
 console.log(process.env)
 var email = require('./sender');
-
 var fs = require("fs");
 
+//Email de recuperação de password
+email.sendRecoverPasswordEmail("170221034@estudantes.ips.pt");
 
-// exeple of file to send
+//Email com aviso de alterações num projeto
+email.sendChangesInProjectEmail("170221034@estudantes.ips.pt");
 
+//Email com a confirmação se o projeto foi aceite ou recusado
+email.sendConfirmProjectEmail("170221034@estudantes.ips.pt");
 
-//send any email
-//email.sendEmail("patriciapaquete@gmail.com", "we",attachment, "qrCode", "application/pdf")
+//Email de confirmação de conta
+email.sendConfirmationEmail("170221034@estudantes.ips.pt");
 
-//email.sendEmail("170221034@estudantes.ips.pt", "welcome")
+//Email co guidelines para o projeto
+email.sendProjectGuidelinesEmail("170221034@estudantes.ips.pt");
+
+//Email com QRCode
 pathToAttachment = "./Email Sender/qrcode.pdf";
 attachment = fs.readFileSync(pathToAttachment).toString("base64");
+email.sendQRCodeEmail("170221034@estudantes.ips.pt",attachment);
 
-email.sendQRCodeEmail("patricia.pfsg98@gmail.com", attachment)
-//email.sendRecoverPasswordEmail("patricia.pfsg98@gmail.com")
-
-//send a template email 
-// email.sendEmail("patriciapaquete@gmail.com", "welcome",attachment, "qrCode", "application/pdf")
