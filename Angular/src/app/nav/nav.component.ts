@@ -5,7 +5,7 @@ import { Component, AfterViewInit, OnInit, ViewChild, ElementRef } from '@angula
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements AfterViewInit {
+export class NavComponent implements  AfterViewInit {
   @ViewChild('logout') logout: ElementRef;
   @ViewChild('logged') logged: ElementRef;
   constructor() {
@@ -13,8 +13,8 @@ export class NavComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
     if (localStorage.getItem('token')) {
-      console.log(localStorage.getItem('token'))
       this.logged.nativeElement.style.display = 'block';
       this.logout.nativeElement.style.display = 'none';
     } else {

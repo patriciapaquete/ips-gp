@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { FormBuilder, FormArray, FormControl, Validators } from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private service: UserService, public _fb: FormBuilder) {
+  constructor(private service: UserService, public _fb: FormBuilder, private authService: AuthService) {
   }
 
   formLogin = this._fb.group({
@@ -30,6 +31,8 @@ export class LoginComponent implements OnInit {
   postData() {
     if (this.formLogin.valid) {
       this.service.login(this.formLogin.value).subscribe((res) => {
+        this.authService.setLocalStorage(res);
+
         console.log('response from post data is ', res);
       }, (err) => {
         console.log('error during post is ', err);

@@ -10,6 +10,15 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  profile(token) {
+
+    return this.http.post('/api/profile', { authorization: token }, {
+      observe: 'body',
+      withCredentials: true,
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
+  }
+
   register(formData) {
     return this.http.post('/api/register', formData, {
       observe: 'body',
