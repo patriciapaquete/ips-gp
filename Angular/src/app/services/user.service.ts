@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {User} from '../../../models/utilizadores'
+import { User } from '../../../models/utilizadores';
 
 
 @Injectable({
@@ -36,13 +36,29 @@ export class UserService {
     });
   }
 
+  alterPassword(formData) {
+    return this.http.post('/api/recover_password', formData, {
+      observe: 'body',
+      withCredentials: true,
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
+  }
+
   getDisaprovedUsers(): Observable<User[]> {
     return this.http.get<User[]>("/api/userAprove")
   }
 
-  aproveUser(user,avaliacao){
+  aproveUser(user, avaliacao) {
     user.aprovado = avaliacao;
-    return this.http.post("/api/avaliarUser",user);
+    return this.http.post("/api/avaliarUser", user);
+  }
+
+  editUser(formData) {
+    return this.http.post('/api/edit_user', formData, {
+      observe: 'body',
+      withCredentials: true,
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
   }
 
 }

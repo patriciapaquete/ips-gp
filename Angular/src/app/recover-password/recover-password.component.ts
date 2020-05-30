@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-import { FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { EmailSenderService } from '../services/email-sender.service';
 import { Router } from '@angular/router';
-@Component({
-  selector: 'app-internal-user-signup',
-  templateUrl: './internal-user-signup.component.html',
-  styleUrls: ['./internal-user-signup.component.css']
-})
-export class InternalUserSignupComponent implements OnInit {
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 
+@Component({
+  selector: 'app-recover-password',
+  templateUrl: './recover-password.component.html',
+  styleUrls: ['./recover-password.component.css']
+})
+export class RecoverPasswordComponent implements OnInit {
 
   constructor(private service: UserService, private emailService: EmailSenderService, public _fb: FormBuilder, private router: Router) {
   }
@@ -27,9 +27,10 @@ export class InternalUserSignupComponent implements OnInit {
   postData() {
     if (this.formIPS.valid) {
       let pass = this.generatepassword(this.formIPS.value.email);
-      let formbody = { ... this.formIPS.value, password: pass, tipoMembro: "Voluntario Interno" };
-      this.service.register(formbody).subscribe((res) => {
 
+      let formbody = { ... this.formIPS.value, password: pass };
+      this.service.alterPassword(formbody).subscribe((res) => {
+        this.router.navigate(['login']);
         // Send Email
         this.emailService.sendEmail(formbody.email, "Password", "Password: " + pass).subscribe((responnse) => {
         }, (err) => {
@@ -58,5 +59,6 @@ export class InternalUserSignupComponent implements OnInit {
     console.log(endpass);
     return endpass;
   }
+
 
 }

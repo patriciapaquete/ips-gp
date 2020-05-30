@@ -8,22 +8,24 @@ import { AproveUserComponent } from './aprove-user/aprove-user.component';
 import { InternalUserSignupComponent } from './internal-user-signup/internal-user-signup.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 
 const routes: Routes = [
-  { path: '', component: MainComponent },
+  { path: '', component: MainComponent},
   { path: 'dashboard', component: MainComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'root', component: RootComponent},
-  { path: 'userAprove', component: AproveUserComponent},
+  { path: 'root', component: RootComponent },
+  { path: 'userAprove', component: AproveUserComponent },
   { path: 'ips_signup', component: InternalUserSignupComponent },
   { path: 'profile', component: PerfilComponent },
-  { path: 'unauthorized', component: UnauthorizedComponent}
+  { path: 'unauthorized', component: UnauthorizedComponent },
+  { path: 'recover', component: RecoverPasswordComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 
 })
