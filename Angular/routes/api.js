@@ -7,7 +7,7 @@ var jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 const User = require('../models/mongoConnection').Utilizadores;
-
+const email = require('../config/sender.js');
 
 const pathToKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
@@ -115,19 +115,12 @@ router.post("/profile", (req, res, next) => {
     try {
       decoded = jwt.verify(authorization, PUB_KEY);
       var userId = decoded.sub;
-      // Fetch the user by id
     } catch (e) {
-      console.log("5")
 
       return res.sendStatus(401);
     } User.findOne({ _id: userId }).then(function (user) {
-      // Do something with the user
       res.send({ success: true, user: user });
-
-
     }).catch((err) => {
-      console.log("1233 :" + err)
-
       next(err);
     });
 
@@ -138,25 +131,118 @@ router.post("/profile", (req, res, next) => {
   }
 })
 
-// //Logout handle
-// router.get("/logout", (req, res) => {
-//   req.logOut();
-//   // req.flash('success_msg','you are logged out');
-//   res.redirect("/users/login");
-// });
+router.post("/edit_user", (req, res) => {
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (!user) {
+        res.status(401).json({ success: false, message: "Utilizador não encontrado, porfavor verifique o seu mail e password" });
+      }
+      if (req.body.password) {
+        bcrypt.genSalt(10, (err, salt) =>
+          bcrypt.hash(req.body.password, salt, (err, hash) => {
+            if (err) throw err;
+            //set Password to hashed
+            user.password = hash;
 
-router.get("/userAprove",(req,res)=>{
-  User.find({aprovado:"Em Espera"}).then((users)=>{
+          })
+        );
+      }
+      for (const key in req.body) {
+        if (key === 'password') {
+          continue
+        }
+        user[key] = req.body[key];
+      }
+      user
+        .save()
+        .then((user) => {
+          res.status(200).json({ success: true, user: user });
+        })
+
+    })
+    .catch((err) => {
+      //next(err);
+    });
+})
+
+router.get("/userAprove", (req, res) => {
+  User.find({ aprovado: "Em Espera" }).then((users) => {
     res.json(users);
   })
 });
 
-router.post("/avaliarUser",(req,res)=>{
+router.post("/avaliarUser", (req, res) => {
   const email = req.body.email;
   const aprovado = req.body.aprovado;
-  user = User.updateOne({email:email}, {aprovado:aprovado},function(err,doc) {
-    if(err) res.status(500).send({error:err});
+  user = User.updateOne({ email: email }, { aprovado: aprovado }, function (err, doc) {
+    if (err) res.status(500).send({ error: err });
     return res.status(200).send("Utilizador Aprovado com Sucesso!");
   });
 });
+
+router.post("/recover_password", (req, res) => {
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (!user) {
+        res.status(401).json({ success: false, msg: "Utilizador não encontrado, porfavor verifique o seu mail e password" });
+      }
+      bcrypt.genSalt(10, (err, salt) =>
+        bcrypt.hash(req.body.password, salt, (err, hash) => {
+          if (err) throw err;
+          //set Password to hashed
+          user.password = hash;
+          //save user
+          user
+            .save()
+            .then((user) => {
+              res.status(200).json({ success: true, user: user });
+            })
+        })
+      );
+    })
+    .catch((err) => {
+      next(err);
+    });
+})
+
+//// EMAILS
+router.post("/sendEmail", (req, res) => {
+  let to = req.body.to;
+  let subject = req.body.subject;
+  let content = req.body.content;
+  email.sendEmail(to, subject, content);
+})
+
+router.post("/sendConfirmationEmail", (req, res) => {
+  let to = req.body.to;
+  email.sendConfirmationEmail(to);
+})
+
+router.post("/sendRecoverPasswordEmail", (req, res) => {
+  let to = req.body.to;
+  email.sendRecoverPasswordEmail(to);
+})
+
+router.post("/sendConfirmProjectEmail", (req, res) => {
+  let to = req.body.to;
+  email.sendConfirmProjectEmail(to);
+})
+
+router.post("/sendChangesInProjectEmail", (req, res) => {
+  let to = req.body.to;
+  email.sendChangesInProjectEmail(to);
+})
+
+router.post("/sendProjectGuidelinesEmail", (req, res) => {
+  let to = req.body.to;
+  email.sendProjectGuidelinesEmail(to);
+})
+
+router.post("/sendQRCodeEmail", (req, res) => {
+  let to = req.body.to;
+  let attachment = req.body.attachment;
+  email.sendQRCodeEmail(to, attachment);
+})
+
+
 module.exports = router;

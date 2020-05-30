@@ -1,14 +1,16 @@
 import { Component, AfterViewInit, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements  AfterViewInit {
+export class NavComponent implements AfterViewInit {
   @ViewChild('logout') logout: ElementRef;
   @ViewChild('logged') logged: ElementRef;
-  constructor() {
+  constructor(private service: AuthService) {
 
   }
 
@@ -25,5 +27,5 @@ export class NavComponent implements  AfterViewInit {
     }
   }
 
-
+  logOut() { this.service.logout(); }
 }

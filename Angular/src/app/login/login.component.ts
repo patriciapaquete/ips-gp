@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private service: UserService, public _fb: FormBuilder, private authService: AuthService) {
+  constructor(private service: UserService, private authService: AuthService, public _fb: FormBuilder, private router: Router) {
   }
 
   formLogin = this._fb.group({
@@ -32,11 +33,12 @@ export class LoginComponent implements OnInit {
     if (this.formLogin.valid) {
       this.service.login(this.formLogin.value).subscribe((res) => {
         this.authService.setLocalStorage(res);
+        this.router.navigate(["/"]);
 
-        console.log('response from post data is ', res);
       }, (err) => {
         console.log('error during post is ', err);
       });
+
     } else {
       console.log('formulario invalido');
     }

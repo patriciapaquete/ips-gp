@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { EmailSenderService } from '../services/email-sender.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class SignupComponent implements OnInit {
 
   selectedAreas: Array<String>;
   selectedAreasError: Boolean
-  constructor(private service: UserService, public _fb: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private userService: UserService, private authService: AuthService, private emailService: EmailSenderService, public _fb: FormBuilder, private router: Router) {
   }
 
   formRegisto = this._fb.group({
@@ -167,18 +168,23 @@ export class SignupComponent implements OnInit {
     if (this.formRegisto.valid && this.formPreferencias.valid) {
       const selectedAreas = this.selectedAreas;
       let formbody = { ...this.formRegisto.value, selectedAreas };
-      console.log(formbody);
-      this.service.register(formbody).subscribe((res) => {
-        this.authService.setLocalStorage(res);
-        console.log('response from post data is ', res);
+      this.userService.register(formbody).subscribe((res) => {
+
+        // Send Email
+        this.emailService.sendConfirmationEmail(formbody.email).subscribe((responnse) => {
+        }, (err) => {
+          console.log('error during post is ', err);
+        });
+
+        // REDIRECT
+        this.router.navigate(['login']);
       }, (err) => {
         console.log('error during post is ', err);
       }, () => {
-        console.log("done!");
-        // this.router.navigate(['login']);
+
       })
     } else {
-      console.log('formulario invalido')
+      console.log('formulario invalido');
     }
   }
 }

@@ -5,12 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule} from '@angular/common/http';
-import {MatStepperModule, MatStep} from '@angular/material/stepper';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCheckboxModule}from '@angular/material/checkbox'
-import {MatSelectModule}from '@angular/material/select';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { HttpClientModule } from '@angular/common/http';
+import { MatStepperModule, MatStep } from '@angular/material/stepper';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 import { AppComponent } from './app.component';
@@ -25,8 +25,8 @@ import { AproveUserComponent } from './aprove-user/aprove-user.component';
 import { InternalUserSignupComponent } from './internal-user-signup/internal-user-signup.component';
 import { FooterComponent } from './footer/footer.component';
 import { PerfilComponent } from './perfil/perfil.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 
 @NgModule({
@@ -56,10 +56,10 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     InternalUserSignupComponent,
     FooterComponent,
     PerfilComponent,
-    EditProfileComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    RecoverPasswordComponent
   ],
   providers: [],
-  bootstrap: [AppComponent, MainComponent, LoginComponent, SignupComponent, NavComponent,InternalUserSignupComponent],
+  bootstrap: [AppComponent, MainComponent, LoginComponent, SignupComponent, NavComponent, InternalUserSignupComponent],
 })
 export class AppModule { }
