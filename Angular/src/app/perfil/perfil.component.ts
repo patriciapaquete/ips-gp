@@ -105,7 +105,7 @@ export class PerfilComponent implements OnInit {
       }
 
       //add email to find user
-      formbody['email'] = this.email;
+      formbody['email'] = this.email.nativeElement.innerHTML;
 
       this.userService.editUser(formbody).subscribe((res) => {
         console.log(res);
