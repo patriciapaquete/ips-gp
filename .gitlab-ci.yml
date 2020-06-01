@@ -15,5 +15,5 @@ build docker image:
         - docker:dind
     script:
         -docker login --username $DOCKER_HUB_USER --password $DOCKER_HUB_TOKEN
-        - docker build --rm -t $DOCKER_HUB_USER/GP_Projeto:$CI_COMMIT_SHA -f deploy/Dockerfile Angular
-        - docker push $DOCKER_HUB_USER/GP_Projeto:$CI_COMMIT_SHA
+        - docker build --rm -t $DOCKER_HUB_USER/gp_projeto:$CI_COMMIT_SHA -f deploy/Dockerfile Angular
+        - docker push $DOCKER_HUB_USER/gp_projeto:$CI_COMMIT_SHA
