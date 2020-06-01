@@ -6,8 +6,5 @@ install_dependencies:
     stage: build
     image: node:latest
     script:
-        - cd Angular && npm install
+        - cd Angular && npm install && node server
 
-start_server:
-    stage: test
-    script: npm start
