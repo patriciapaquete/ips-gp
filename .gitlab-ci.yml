@@ -2,8 +2,12 @@ stages:
     - build
     - test
    
-   build node:
+install_dependencies:
     stage: build
-    image: node:12-alpine3.10
+    image: node:latest
     script:
         - cd Angular && npm install
+
+start_server:
+    stage: test
+    script: npm start
