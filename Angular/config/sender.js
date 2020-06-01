@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail');
 var fs = require("fs");
-const EMAIL = "paquetep@gmail.com";
+const EMAIL = "ips.voluntatiado.noreplay@gmail.com";
 const api_key = require("./keys").SENDGRID_API_KEY;
 sgMail.setApiKey(api_key);
 console.log(api_key)
