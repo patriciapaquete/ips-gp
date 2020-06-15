@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: projeto
+  name: projeto-deployment
+  namespace: projeto-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: projeto
+  template:
+    metadata:
+      labels:
+        name: projeto
+    spec:
+      containers:
+      - name: gpdemo-app
+        image: docker.io/%%dockerUser%%/gp_projeto:%%imageTag%%
+        ports: 
+          - containerPort: 8080
+        imagePullPolicy: Always
+        env:
+        - name: SERVER_ID  #export the pod ID as SERVER_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: environment
+          value: dev
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      imagePullSecrets:
+        - name: docker-registry

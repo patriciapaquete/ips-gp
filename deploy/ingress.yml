@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: projeto-service
+  namespace: projeto-dev
+spec:
+  backend:
+    serviceName: projeto-service
+    servicePort: 8080

@@ -1,12 +1,13 @@
 stages:
     - build
-    - test
     - build_docker
+    - deploy_kubernetes
+
 install_dependencies:
     stage: build
     image: node:latest
     script:
-        - cd Angular && npm install 
+        - cd Angular && npm install && npm build
 
 build docker image:
     stage: build_docker
@@ -14,6 +15,24 @@ build docker image:
     services:
         - docker:dind
     script:
-        -docker login --username $DOCKER_HUB_USER --password $DOCKER_HUB_TOKEN
-        - docker build --rm -t $DOCKER_HUB_USER/gp_projeto:$CI_COMMIT_SHA -f deploy/Dockerfile Angular
+        - docker login --username $DOCKER_HUB_USER --password $DOCKER_HUB_TOKEN
+        - docker build --rm -t $DOCKER_HUB_USER/gp_projeto:$CI_COMMIT_SHA -f deploy/DockerFile Angular
         - docker push $DOCKER_HUB_USER/gp_projeto:$CI_COMMIT_SHA
+
+deploy service:
+    stage: deploy_kubernetes
+    image: google/cloud-sdk:latest
+    script:
+        - echo $GKE_SERVICE_KEY | base64 -d > service-account.json
+        - gcloud auth activate-service-account --key-file service-account.json --project=gp-projeto-ips-voluntariado
+        - gcloud config set project gp-projeto-ips-voluntariado
+        - gcloud config set compute/zone us-central1-a
+        - gcloud container clusters get-credentials gp-projeto-1
+        - sed -i "s/%%imageTag%%/${CI_COMMIT_SHA}/" deploy/deployment.yml
+        - sed -i "s/%%dockerUser%%/${DOCKER_HUB_USER}/" deploy/deployment.yml
+        - kubectl apply -f deploy/namespace.yml
+        - kubectl apply -f deploy/deployment.yml
+        - kubectl apply -f deploy/service.yml
+        - kubectl apply -f deploy/ingress.yml
+
+    
