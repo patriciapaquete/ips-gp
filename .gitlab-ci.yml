@@ -27,7 +27,7 @@ deploy service:
         - gcloud auth activate-service-account --key-file service-account.json --project=gp-projeto-ips-voluntariado
         - gcloud config set project gp-projeto-ips-voluntariado
         - gcloud config set compute/zone us-central1-a
-        - gcloud container clusters get-credentials gp-projeto-1
+        - gcloud container clusters get-credentials gp-projeto
         - sed -i "s/%%imageTag%%/${CI_COMMIT_SHA}/" deploy/deployment.yml
         - sed -i "s/%%dockerUser%%/${DOCKER_HUB_USER}/" deploy/deployment.yml
         - kubectl apply -f deploy/namespace.yml
